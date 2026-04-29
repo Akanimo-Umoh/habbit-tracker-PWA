@@ -107,13 +107,13 @@ export default function HabitCard({
             <button
               data-testid="confirm-delete-button"
               onClick={() => onDelete(habit.id)}
-              className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+              className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 cursor-pointer"
             >
               Yes, delete
             </button>
             <button
               onClick={() => setConfirming(false)}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1"
+              className="rounded-md border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1 cursor-pointer"
             >
               Cancel
             </button>
