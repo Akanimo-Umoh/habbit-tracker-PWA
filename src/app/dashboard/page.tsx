@@ -1,26 +1,25 @@
 "use client";
 
-import HabitForm from "@/components/habits/HabitForm";
+import { useState } from "react";
+import ProtectedRoute from "@/components/shared/ProtectedRoute";
 import HabitList from "@/components/habits/HabitList";
+import HabitForm from "@/components/habits/HabitForm";
 import { getCurrentSession, logOut } from "@/lib/auth";
 import { getHabits, saveHabits } from "@/lib/storage";
-import ProtectedRoute from "@/components/shared/ProtectedRoute";
-import { Habit } from "@/types/habit";
-import { useState, useEffect } from "react";
+import type { Habit } from "@/types/habit";
+import Link from "next/link";
+
+function getInitialHabits(userId: string): Habit[] {
+  return getHabits().filter((h) => h.userId === userId);
+}
 
 export default function DashboardPage() {
-  const [habits, setHabits] = useState<Habit[]>([]);
+  const session = getCurrentSession();
+
+  const [habits, setHabits] = useState<Habit[]>(() =>
+    session ? getInitialHabits(session.userId) : [],
+  );
   const [showForm, setShowForm] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  const session = typeof window !== "undefined" ? getCurrentSession() : null;
-
-  useEffect(() => {
-    const all = getHabits();
-    const mine = all.filter((h) => h.userId === session?.userId);
-    setHabits(mine);
-    setLoaded(true);
-  }, [session?.userId]);
 
   function handleSaveNew(name: string, description: string) {
     if (!session) return;
@@ -36,18 +35,14 @@ export default function DashboardPage() {
     };
 
     const all = getHabits();
-    const updated = [...all, newHabit];
-    saveHabits(updated);
+    saveHabits([...all, newHabit]);
     setHabits((prev) => [...prev, newHabit]);
     setShowForm(false);
   }
 
   function handleUpdate(updatedHabit: Habit) {
     const all = getHabits();
-    const updated = all.map((h) =>
-      h.id === updatedHabit.id ? updatedHabit : h,
-    );
-    saveHabits(updated);
+    saveHabits(all.map((h) => (h.id === updatedHabit.id ? updatedHabit : h)));
     setHabits((prev) =>
       prev.map((h) => (h.id === updatedHabit.id ? updatedHabit : h)),
     );
@@ -55,8 +50,7 @@ export default function DashboardPage() {
 
   function handleDelete(id: string) {
     const all = getHabits();
-    const updated = all.filter((h) => h.id !== id);
-    saveHabits(updated);
+    saveHabits(all.filter((h) => h.id !== id));
     setHabits((prev) => prev.filter((h) => h.id !== id));
   }
 
@@ -67,29 +61,36 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div data-testid="dashboard-page" className="min-h-screen bg-gray-50">
-        <header className="border-b border-gray-200 bg-white px-4 py-4 shadow-sm">
+      <div data-testid="dashboard-page" className="pt-16.75">
+        <header className="border-b border-gray-200 px-4 py-4 fixed top-0 w-full left-0 h-16.75">
           <div className="mx-auto flex max-w-lg items-center justify-between">
-            <h1 className="text-xl font-bold text-indigo-600">Habit Tracker</h1>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-500">{session?.email}</span>
-              <button
-                data-testid="auth-logout-button"
-                onClick={handleLogout}
-                className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1"
-              >
-                Log out
-              </button>
-            </div>
+            <Link href="/" className="text-xl font-bold text-white">
+              Habit<span className="text-indigo-600">Tracker</span>
+            </Link>
+
+            <button
+              data-testid="auth-logout-button"
+              onClick={handleLogout}
+              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1 cursor-pointer hover:text-gray-800"
+            >
+              Log out
+            </button>
           </div>
         </header>
 
-        <main className="mx-auto max-w-lg px-4 py-6">
+        <div className="mx-auto max-w-lg px-4 py-6">
+          <p className="mb-6">
+            Welcome,{" "}
+            <span className="text-sm font-medium text-indigo-600">
+              {session?.email}
+            </span>
+          </p>
+
           {!showForm && (
             <button
               data-testid="create-habit-button"
               onClick={() => setShowForm(true)}
-              className="mb-6 w-full rounded-xl border-2 border-dashed border-indigo-300 py-4 text-sm font-medium text-indigo-500 hover:border-indigo-400 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="mb-6 w-full rounded-xl border-2 border-dashed border-indigo-300 py-4 text-sm font-medium text-indigo-500 hover:border-indigo-400 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer"
             >
               + Add a new habit
             </button>
@@ -104,7 +105,7 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {loaded && habits.length === 0 && !showForm && (
+          {habits.length === 0 && !showForm && (
             <div
               data-testid="empty-state"
               className="rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center"
@@ -122,7 +123,7 @@ export default function DashboardPage() {
               onDelete={handleDelete}
             />
           )}
-        </main>
+        </div>
       </div>
     </ProtectedRoute>
   );
