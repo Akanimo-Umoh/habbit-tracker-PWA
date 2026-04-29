@@ -8,7 +8,7 @@ export function calculateCurrentStreak(
   const unique = [...new Set(completions)];
 
   // sort descending first
-  const sorted = unique.sort((a, b) => b.localeCompare(a));
+  const sorted = [...unique].sort((a, b) => b.localeCompare(a));
 
   // if today not completed - 0
   if (!sorted.includes(todayDate)) return 0;
