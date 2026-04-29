@@ -4,7 +4,6 @@ import { useState } from "react";
 import HabitCard from "./HabitCard";
 import HabitForm from "./HabitForm";
 import { Habit } from "../../types/habit";
-import { getHabitSlug } from "../../lib/slug";
 
 type HabitListProps = {
   habits: Habit[];
@@ -19,20 +18,9 @@ export default function HabitList({
 }: HabitListProps) {
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
 
-  function handleEdit(habit: Habit) {
-    setEditingHabit(habit);
-  }
-
   function handleSaveEdit(name: string, description: string) {
     if (!editingHabit) return;
-
-    const updated: Habit = {
-      ...editingHabit,
-      name,
-      description,
-    };
-
-    onUpdate(updated);
+    onUpdate({ ...editingHabit, name, description });
     setEditingHabit(null);
   }
 
@@ -41,33 +29,26 @@ export default function HabitList({
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      {habits.map((habit) => {
-        const slug = getHabitSlug(habit.name);
-        const isEditing = editingHabit?.id === habit.id;
+    <>
+      {editingHabit && (
+        <HabitForm
+          initial={editingHabit}
+          onSave={handleSaveEdit}
+          onCancel={handleCancelEdit}
+        />
+      )}
 
-        if (isEditing) {
-          return (
-            <div key={habit.id}>
-              <HabitForm
-                initial={editingHabit}
-                onSave={handleSaveEdit}
-                onCancel={handleCancelEdit}
-              />
-            </div>
-          );
-        }
-
-        return (
+      <div className="flex flex-col gap-4">
+        {habits.map((habit) => (
           <HabitCard
-            key={slug}
+            key={habit.id}
             habit={habit}
             onUpdate={onUpdate}
-            onEdit={handleEdit}
+            onEdit={setEditingHabit}
             onDelete={onDelete}
           />
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
