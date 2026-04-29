@@ -110,7 +110,7 @@ export default function HabitForm({
             <button
               type="submit"
               data-testid="habit-save-button"
-              className="btn-primary flex-1 text-center px-0"
+              className="text-white bg-indigo-600 py-1.5 rounded-md shadow-sm hover:bg-indigo-700 active:ring-2 ring-offset-1 ring-indigo-700 cursor-pointer flex-1 text-center"
             >
               Save
             </button>
@@ -118,7 +118,7 @@ export default function HabitForm({
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 rounded-md border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 cursor-pointer"
+              className="flex-1 rounded-md border border-gray-300 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 cursor-pointer"
             >
               Cancel
             </button>
