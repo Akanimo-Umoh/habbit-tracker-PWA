@@ -158,9 +158,7 @@ Next.js only serves static files from a `public` folder at the project root. Ser
 | Frequency | Only `daily` supported | Spec explicitly limits this stage to daily frequency. |
 | `public` at root | Not inside `src` | Required by Next.js static file serving and service worker scope rules. |
 | Auth route guarding | `/login` and `/signup` are accessible while logged in | The TRD does not specify redirect behavior for these routes for authenticated users. |
-| Service Worker strategy | Network First for HTML, Cache First for static assets | 
-Cache First for HTML caused stale JS references to break redirects on repeated loads. 
-Network First preserves correct app behavior while still serving the app shell offline. |
+| Service Worker strategy | Network First for HTML, Cache First for static assets | Cache First for HTML caused stale JS references to break redirects on repeated loads. Network First preserves correct app behavior while still serving the app shell offline. |
 
 ---
 
