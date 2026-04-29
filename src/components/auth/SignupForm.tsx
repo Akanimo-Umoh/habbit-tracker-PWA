@@ -26,50 +26,57 @@ export default function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && (
-        <p role="alert" className="text-sm text-red-500">
-          {error}
-        </p>
-      )}
+    <div className="container w-1/2">
+      <h1 className="title">Sign up</h1>
 
-      <div>
-        <label htmlFor="signup-email">Email</label>
-        <input
-          type="email"
-          id="signup-email"
-          data-testid="auth-signup-email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-white"
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <p role="alert" className="error">
+            {error}
+          </p>
+        )}
 
-      <div>
-        <label htmlFor="signup-password">Password</label>
-        <input
-          type="password"
-          id="signup-password"
-          data-testid="auth-signup-password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="bg-white"
-        />
-      </div>
+        <div>
+          <label htmlFor="signup-email">Email</label>
 
-      <button
-        type="submit"
-        data-testid="auth-signup-submit"
-        className="bg-blue-500 py-1 px-4 rounded-sm"
-      >
-        Sign up
-      </button>
+          <input
+            type="email"
+            id="signup-email"
+            data-testid="auth-signup-email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-white"
+          />
+        </div>
 
-      <p>
-        Already have an account? <Link href="/login">Login</Link>
-      </p>
-    </form>
+        <div>
+          <label htmlFor="signup-password">Password</label>
+          <input
+            type="password"
+            id="signup-password"
+            data-testid="auth-signup-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="bg-white"
+          />
+        </div>
+
+        <div className="flex items-end gap-4">
+          <button
+            type="submit"
+            data-testid="auth-signup-submit"
+            className="btn-primary"
+          >
+            Sign up
+          </button>
+
+          <Link href="/login" className="text-link">
+            or login here
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }

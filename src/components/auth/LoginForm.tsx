@@ -26,50 +26,56 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && (
-        <p role="alert" className="text-sm text-red-500">
-          {error}
-        </p>
-      )}
+    <div className="container w-1/2">
+      <h1 className="title">Login</h1>
 
-      <div>
-        <label htmlFor="login-email">Email</label>
-        <input
-          type="email"
-          id="login-email"
-          data-testid="auth-login-email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-white"
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <p role="alert" className="error">
+            {error}
+          </p>
+        )}
 
-      <div>
-        <label htmlFor="login-password">Password</label>
-        <input
-          type="password"
-          id="login-password"
-          data-testid="auth-login-password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="bg-white"
-        />
-      </div>
+        <div>
+          <label htmlFor="login-email">Email</label>
+          <input
+            type="email"
+            id="login-email"
+            data-testid="auth-login-email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-white"
+          />
+        </div>
 
-      <button
-        type="submit"
-        data-testid="auth-login-submit"
-        className="bg-blue-500 py-1 px-4 rounded-sm"
-      >
-        Login
-      </button>
+        <div>
+          <label htmlFor="login-password">Password</label>
+          <input
+            type="password"
+            id="login-password"
+            data-testid="auth-login-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="bg-white"
+          />
+        </div>
 
-      <p>
-        Don&apos;t have an account? <Link href="/signup">Sign up</Link>
-      </p>
-    </form>
+        <div className="flex items-end gap-4">
+          <button
+            type="submit"
+            data-testid="auth-login-submit"
+            className="btn-primary"
+          >
+            Login
+          </button>
+
+          <Link href="/signup" className="text-link">
+            or sign up here
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }

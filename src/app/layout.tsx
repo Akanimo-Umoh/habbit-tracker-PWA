@@ -32,7 +32,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#4f46e5" />
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <main>{children}</main>
 
         <script
           dangerouslySetInnerHTML={{
