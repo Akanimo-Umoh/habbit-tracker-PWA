@@ -44,11 +44,6 @@ export default function HabitCard({
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <h3 className="font-semibold text-slate-900">{habit.name}</h3>
-            {isCompleted && (
-              <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                Done today
-              </span>
-            )}
           </div>
 
           {habit.description && (
@@ -94,6 +89,12 @@ export default function HabitCard({
               Delete
             </button>
           </div>
+
+          {isCompleted && (
+            <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+              Done today
+            </span>
+          )}
         </div>
       </div>
 
