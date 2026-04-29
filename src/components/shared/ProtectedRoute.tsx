@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getCurrentSession } from "../../lib/auth";
 
@@ -10,19 +10,17 @@ export default function ProtectedRoute({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [verified, setVerified] = useState(false);
+  const session = getCurrentSession();
 
   useEffect(() => {
-    const session = getCurrentSession();
-
     if (!session) {
       router.replace("/login");
-    } else {
-      setVerified(true);
     }
-  }, [router]);
+  }, [session, router]);
 
-  if (!verified) return null;
+  if (!session) {
+    return <p>Redirecting...</p>;
+  }
 
   return <>{children}</>;
 }
