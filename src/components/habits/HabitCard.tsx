@@ -34,7 +34,7 @@ export default function HabitCard({
   return (
     <div
       data-testid={`habit-card-${slug}`}
-      className={`container transition-colors ${
+      className={`container transition-colors mx-auto ${
         isCompleted
           ? "border-l-4 border-l-green-500"
           : "border-l-4 border-l-indigo-400"

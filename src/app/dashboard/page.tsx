@@ -62,8 +62,8 @@ export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <div data-testid="dashboard-page" className="pt-16.75">
-        <header className="border-b border-gray-200 px-4 py-4 fixed top-0 w-full left-0 h-16.75">
-          <div className="mx-auto flex max-w-lg items-center justify-between">
+        <header className="border-b border-gray-200 px-4 py-4 fixed top-0 w-full left-0 h-16.75 flex items-center">
+          <div className="mx-auto flex max-w-lg items-center justify-between w-full">
             <Link href="/" className="text-xl font-bold text-white">
               Habit<span className="text-indigo-600">Tracker</span>
             </Link>

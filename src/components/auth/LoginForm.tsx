@@ -26,7 +26,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="container max-w-100 w-full md:max-w-1/2">
+    <div className="container max-w-100 w-full mx-6 md:max-w-1/2">
       <h1 className="title">Login</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
