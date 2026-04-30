@@ -26,7 +26,7 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="container w-1/2">
+    <div className="container max-w-100 w-full md:max-w-1/2">
       <h1 className="title">Sign up</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">

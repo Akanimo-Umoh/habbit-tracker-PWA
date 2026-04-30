@@ -47,7 +47,7 @@ label {
 }
 
 .container {
-  @apply p-6 rounded-lg shadow-lg bg-white mx-auto;
+  @apply p-6 rounded-lg shadow-lg bg-white mx-6;
 }
 
 .btn-primary {
